@@ -1,0 +1,38 @@
+import os
+import time
+import random
+
+DIRECTORIO_TAREAS = "cola_de_tareas"
+
+def procesar_excusa():
+    while True:
+        archivos = [f for f in os.listdir(DIRECTORIO_TAREAS) if f.startswith("procesando_")]
+        
+        if archivos:
+            archivo = archivos[0]
+            ruta = os.path.join(DIRECTORIO_TAREAS, archivo)
+            
+            with open(ruta, "r", encoding="utf-8") as f:
+                excusa_texto = f.read().strip()
+            
+            print(f"[PROFESOR RELAJADO] 🧘 Revisando excusa: \"{excusa_texto}\"")
+            
+            # Acepta más fácilmente y con humor
+            if any(palabra in excusa_texto.lower() for palabra in ["perro", "gato", "fiesta", "emergencia", "dormido", "ordenador", "virus"]):
+                print(f"[PROFESOR RELAJADO] ✅ ACEPTADA: ¡¿Tu perro comió el ordenador?! Me encanta, ¡pasa!")
+            elif random.random() < 0.7:
+                print(f"[PROFESOR RELAJADO] ✅ ACEPTADA: Tranqui, todos hemos estado ahí... ¡Aprobado!")
+            else:
+                print(f"[PROFESOR RELAJADO] 🤨 Rechazada... pero solo porque no tenía emojis 😂")
+            
+            try:
+                os.remove(ruta)
+                print(f"[PROFESOR RELAJADO] 🗑️  Excusa {archivo} procesada con buen rollo.")
+            except FileNotFoundError:
+                pass
+        
+        time.sleep(1.5)  # Más rápido y relajado
+
+if __name__ == "__main__":
+    print("[PROFESOR RELAJADO] 🧘 Listo para salvar alumnos...")
+    procesar_excusa()
